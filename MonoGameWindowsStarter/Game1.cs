@@ -12,6 +12,13 @@ namespace MonoGameWindowsStarter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        // Textures
+        Texture2D textureDialogueBox;
+
+        // Onscreen objects
+        DialogueBox dialoguebox;
+        Text text;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,6 +34,9 @@ namespace MonoGameWindowsStarter
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -41,6 +51,10 @@ namespace MonoGameWindowsStarter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            textureDialogueBox = Content.Load<Texture2D>( "dialogueTEMP" );
+            dialoguebox = new DialogueBox( this, textureDialogueBox );
+            text = new Text( this );
+            text.LoadContent( Content );
         }
 
         /// <summary>
@@ -63,6 +77,7 @@ namespace MonoGameWindowsStarter
                 Exit();
 
             // TODO: Add your update logic here
+            text.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,6 +91,12 @@ namespace MonoGameWindowsStarter
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            dialoguebox.Draw( spriteBatch );
+            text.Draw( spriteBatch );
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

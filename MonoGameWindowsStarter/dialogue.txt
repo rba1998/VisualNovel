@@ -1,0 +1,2 @@
+<This is a set of test dialogue. We'll see how it goes. I need to type something really long here so that I can see if the word wrapping works. Hopefully it does! But what happens if I use a crap ton of words and go over?
+<Now this is a long line. Hopefully long enough to test word wrap... maybe I need to use bigger words?
