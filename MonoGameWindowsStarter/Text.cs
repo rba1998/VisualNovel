@@ -51,6 +51,10 @@ namespace MonoGameWindowsStarter
         string nameNone;
         bool drawName;
 
+        // public string to tell the Game1 class when to change the background, and a bool to signal that it's ready to change.
+        public string newBackground;
+        public bool changeBackground;
+
         // Variable that tells us how many characters a line can have (here for easy changing)
         int maxlinelength;
 
@@ -141,152 +145,181 @@ namespace MonoGameWindowsStarter
                     // If the line begins with '!' we are going to move a character portrait.
                     if (line[0] == '!')
                     {
-                        // Character 1 (waifu)
-                        if (line[1] == '1')
+                        switch (line[1])
                         {
-                            // Make her visible
-                            drawWaifu1 = true;
+                            // Character 1 (waifu)
+                            case '1':
 
-                            // Make the name box draw
-                            drawName = true;
+                                // Make her visible
+                                drawWaifu1 = true;
 
-                            // Change her texture to the default (bright)
-                            waifu1.texture = textureWaifu1;
+                                // Make the name box draw
+                                drawName = true;
 
-                            // Display her name (Faith)
-                            nameDisplay = nameWaifu1;
+                                // Change her texture to the default (bright)
+                                waifu1.texture = textureWaifu1;
 
-                            // Put her name in the center of the Name Box
-                            nameCenterX = 290;
+                                // Display her name (Faith)
+                                nameDisplay = nameWaifu1;
 
-                            // Put on left side of screen
-                            if (line[2] == 'l')
-                            {
-                                waifu1.Bounds.X = 0;
+                                // Put her name in the center of the Name Box
+                                nameCenterX = 290;
 
-                                // Darken other characters to highlight her (to show she's the one in focus, talking)
-                                husbando1.texture = textureHusbando1Dark;
-                                protag.texture = textureProtagDark;
-                            }
-                            // Put on right side of screen
-                            if (line[2] == 'r')
-                            {
-                                waifu1.Bounds.X = game.graphics.PreferredBackBufferWidth - waifu1.Bounds.Width;
+                                // Put on left side of screen
+                                if (line[2] == 'l')
+                                {
+                                    waifu1.Bounds.X = 0;
 
-                                // Darken other characters to highlight her (to show she's the one in focus, talking)
-                                husbando1.texture = textureHusbando1Dark;
-                                protag.texture = textureProtagDark;
-                            }
-                            if (line[2] == 'm')
-                            {
-                                waifu1.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (waifu1.Bounds.Width / 2);
+                                    // Darken other characters to highlight her (to show she's the one in focus, talking)
+                                    husbando1.texture = textureHusbando1Dark;
+                                    protag.texture = textureProtagDark;
+                                }
+                                // Put on right side of screen
+                                if (line[2] == 'r')
+                                {
+                                    waifu1.Bounds.X = game.graphics.PreferredBackBufferWidth - waifu1.Bounds.Width;
 
-                                // Darken other characters to highlight her (to show she's the one in focus, talking)
-                                husbando1.texture = textureHusbando1Dark;
-                                protag.texture = textureProtagDark;
-                            }
-                            // Remove her from the screen
-                            if (line[2] == 'x')
-                                drawWaifu1 = false;
-                        }
-                        // Character 2 (husbando) (same code structure as waifu)
-                        else if (line[1] == '2')
-                        {
-                            drawHusbando1 = true;
-                            drawName = true;
-                            husbando1.texture = textureHusbando1;
-                            nameDisplay = nameHusbando1;
-                            nameCenterX = 303;
+                                    // Darken other characters to highlight her (to show she's the one in focus, talking)
+                                    husbando1.texture = textureHusbando1Dark;
+                                    protag.texture = textureProtagDark;
+                                }
+                                if (line[2] == 'm')
+                                {
+                                    waifu1.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (waifu1.Bounds.Width / 2);
 
-                            if (line[2] == 'l')
-                            {
-                                husbando1.Bounds.X = 0;
+                                    // Darken other characters to highlight her (to show she's the one in focus, talking)
+                                    husbando1.texture = textureHusbando1Dark;
+                                    protag.texture = textureProtagDark;
+                                }
+                                // Remove her from the screen
+                                if (line[2] == 'x')
+                                    drawWaifu1 = false;
+                                break;
+
+                            // Character 2 (husbando) (same code structure as waifu)
+                            case '2':
+                                drawHusbando1 = true;
+                                drawName = true;
+                                husbando1.texture = textureHusbando1;
+                                nameDisplay = nameHusbando1;
+                                nameCenterX = 303;
+
+                                if (line[2] == 'l')
+                                {
+                                    husbando1.Bounds.X = 0;
+                                    waifu1.texture = textureWaifu1Dark;
+                                    protag.texture = textureProtagDark;
+                                }
+                                if (line[2] == 'r')
+                                {
+                                    husbando1.Bounds.X = game.graphics.PreferredBackBufferWidth - husbando1.Bounds.Width;
+                                    waifu1.texture = textureWaifu1Dark;
+                                    protag.texture = textureProtagDark;
+                                }
+                                if (line[2] == 'm')
+                                {
+                                    husbando1.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (husbando1.Bounds.Width / 2);
+
+                                    waifu1.texture = textureHusbando1Dark;
+                                    protag.texture = textureProtagDark;
+                                }
+                                if (line[2] == 'x')
+                                    drawHusbando1 = false;
+                                break;
+
+                            // Character 3 (protagonist) (same code structure as waifu)
+                            case '3':
+                                drawProtag = true;
+                                drawName = true;
+                                protag.texture = textureProtag;
+                                nameDisplay = nameProtag;
+                                nameCenterX = 297;
+
+                                if (line[2] == 'l')
+                                {
+                                    protag.Bounds.X = 0;
+                                    waifu1.texture = textureWaifu1Dark;
+                                    husbando1.texture = textureHusbando1Dark;
+                                }
+                                if (line[2] == 'r')
+                                {
+                                    protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
+                                    waifu1.texture = textureWaifu1Dark;
+                                    husbando1.texture = textureHusbando1Dark;
+                                }
+                                if (line[2] == 'm')
+                                {
+                                    protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
+
+                                    husbando1.texture = textureHusbando1Dark;
+                                    waifu1.texture = textureWaifu1Dark;
+                                }
+                                if (line[2] == 'x')
+                                    drawProtag = false;
+                                break;
+
+                            // Character 4 (no one) used to darken those still in view and hide the name box.
+                            case '4':
                                 waifu1.texture = textureWaifu1Dark;
+                                husbando1.texture = textureHusbando1Dark;
                                 protag.texture = textureProtagDark;
-                            }
-                            if (line[2] == 'r')
-                            {
-                                husbando1.Bounds.X = game.graphics.PreferredBackBufferWidth - husbando1.Bounds.Width;
-                                waifu1.texture = textureWaifu1Dark;
-                                protag.texture = textureProtagDark;
-                            }
-                            if (line[2] == 'm')
-                            {
-                                husbando1.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (husbando1.Bounds.Width / 2);
 
-                                waifu1.texture = textureHusbando1Dark;
-                                protag.texture = textureProtagDark;
-                            }
-                            if (line[2] == 'x')
-                                drawHusbando1 = false;
-                        }
-                        // Character 3 (protagonist) (same code structure as waifu)
-                        else if (line[1] == '3')
-                        {
-                            drawProtag = true;
-                            drawName = true;
-                            protag.texture = textureProtag;
-                            nameDisplay = nameProtag;
-                            nameCenterX = 297;
+                                nameDisplay = nameNone;
+                                drawName = false;
+                                break;
 
-                            if (line[2] == 'l')
-                            {
-                                protag.Bounds.X = 0;
+                            // Character 5 (protag inner monologue) used to brighten protag but hide the name box.
+                            case '5':
                                 waifu1.texture = textureWaifu1Dark;
                                 husbando1.texture = textureHusbando1Dark;
-                            }
-                            if (line[2] == 'r')
-                            {
-                                protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
-                                waifu1.texture = textureWaifu1Dark;
-                                husbando1.texture = textureHusbando1Dark;
-                            }
-                            if (line[2] == 'm')
-                            {
-                                protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
+                                protag.texture = textureProtag;
 
-                                husbando1.texture = textureHusbando1Dark;
-                                waifu1.texture = textureProtagDark;
-                            }
-                            if (line[2] == 'x')
-                                drawProtag = false;
+                                nameDisplay = nameNone;
+                                drawName = false;
+
+                                if (line[2] == 'l')
+                                {
+                                    protag.Bounds.X = 0;
+                                }
+                                if (line[2] == 'r')
+                                {
+                                    protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
+                                }
+                                if (line[2] == 'm')
+                                {
+                                    protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
+                                }
+                                break;
+
+                            default:
+                                break;
+                                
                         }
-                        // Character 4 (no one) used to darken those still in view and hide the name box.
-                        else if (line[1] == '4')
+                        // Ready to read a new line and go back to the beginning of this update function call
+                        // That way we can move a character and display new text at the same time (like real VN's)
+                        readready = true;
+                        goto begin;
+                    }
+
+                    // If the line begins with 'b' we are changing the background.
+                    if ( line[0] == 'b' )
+                    {
+                        changeBackground = true;
+                        switch ( line[1] )
                         {
-                            waifu1.texture = textureWaifu1Dark;
-                            husbando1.texture = textureHusbando1Dark;
-                            protag.texture = textureProtagDark;
-
-                            nameDisplay = nameNone;
-                            drawName = false;
-                        }
-                        // Character 5 (protag inner monologue) used to brighten protag but hide the name box.
-                        else if (line[1] == '5')
-                        {
-                            waifu1.texture = textureWaifu1Dark;
-                            husbando1.texture = textureHusbando1Dark;
-                            protag.texture = textureProtag;
-
-                            nameDisplay = nameNone;
-                            drawName = false;
-
-                            if (line[2] == 'l')
-                            {
-                                protag.Bounds.X = 0;
-                            }
-                            if (line[2] == 'r')
-                            {
-                                protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
-                            }
-                            if (line[2] == 'm')
-                            {
-                                protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
-                            }
+                            case 'L':
+                                newBackground = "Library";
+                                break;
+                            case 'B':
+                                newBackground = "Black";
+                                break;
+                            default:
+                                changeBackground = false;
+                                break;
                         }
 
                         // Ready to read a new line and go back to the beginning of this update function call
-                        // That way we can move a character and display new text at the same time (like real VN's)
+                        // That way we can change the background and display new text at the same time (like real VN's)
                         readready = true;
                         goto begin;
                     }

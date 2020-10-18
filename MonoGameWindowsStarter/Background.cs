@@ -11,7 +11,7 @@ namespace MonoGameWindowsStarter
     class Background
     {
         Game1 game;
-        Texture2D texture;
+        public Texture2D texture;
         BoundingRectangle Bounds;
 
         public Background( Game1 g, Texture2D t )

@@ -1,22 +1,60 @@
-!2l
-<This is a set of test dialogue. We'll see how it goes. I need to type something really long here so that I can see if the word wrapping works. Hopefully it does! But what happens if I use a crap ton of words and go over?
-!1r
-<Now this is a short line. Hopefully long enough to test word wrap... maybe I need to use bigger words?
-!2l
-<Wholesome 100 Keanu chungus reddit moment
+!4
+<The year 2022 has come, and yet the world, or at least our world, is still in shambles. We thought things would get better, but some people were just too selfish.
+<The virus has spread far and wide, and zombies now walk among us.
+<It's scary. We're scared. We've been holed up in this library for a few weeks now- or has it been months? It's hard to keep track anymore.
+!1l
+!2r
+!4
+<Faith and Jay have been here with me, they've helped keep me sane. But I, unfortunately, am the one in charge of scavenging for our food.
 !1x
 !2x
 !4
-<The FitnessGram Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds.
-<Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal.
+<...
+!3m
+<Faith? Jay? Where are you guys?
 !3l
-<[beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible.
-<The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.
-<peepee poopoo
+!2r
+<Hey Mary, did you find us some of the good stuff?
+!3m
 !1l
-!3r
-<*prepares croquettes*
-!5r
-<mmmmmmm croquettes, yummy
+<By "good stuff", I hope you mean another extra big can of beans like the one Mary scored at the supermarket last week.
+!3m
+<Haha...
+<You see, well...
+<I searched everywhere in the vicinity and I couldn't find anything. I think we've wiped this place pretty much clean.
+<Don't you think we should try to camp somewhere else, so we can find more resources?
 !5m
-<I'm running out of memes to put here honestly. Just imagine something funny written in this box. Too much work.
+<Both Jay and Faith suddenly look a little uneasy.
+!1l
+<You know we can't leave the library. It's just way too dangerous for Jay and I.
+!2r
+<Yeah. I'm sure we can find some other source of food soon.
+!1l
+<Well we better find some soon, because I am absolutely STARVING. I'd eat anything...
+!2x
+!3r
+<I'm sorry Faith... I'm sure I'll find something...
+!1l
+<Are you sure you don't have anything on your person? At all?
+!5r
+<Faith is suddenly acting a bit strangely. I couldn't say what it is, but... something seems off.
+!1m
+bB
+<You know...
+<...
+<Humans...
+<...
+<They do have some meat on their bones.
+<You're not using your pinky anyways, right?
+!5r
+<What?
+<This has to be some kind of insane joke, but...
+<Faith seems completely serious.
+<DEAD serious.
+!1m
+<Mary... we'll starve! You don't want that...
+<...right?
+!5r
+<...well...
+<Friends do need to make sacrifices for each other...
+<...right?

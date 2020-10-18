@@ -20,6 +20,7 @@ namespace MonoGameWindowsStarter
 
         // Background textures
         Texture2D bgLibrary;
+        Texture2D bgBlack;
 
         // Onscreen objects
         DialogueBox dialoguebox;
@@ -70,7 +71,8 @@ namespace MonoGameWindowsStarter
             textureDialogueBox = Content.Load<Texture2D>( "dialogueTEMP" );
             textureNameBox = Content.Load<Texture2D>( "nameTEMP" );
             textureDialogueTick = Content.Load<Texture2D>( "dialogueAnimationTiny" );
-            bgLibrary = Content.Load<Texture2D>("LibraryBackground");
+            bgLibrary = Content.Load<Texture2D>( "LibraryBackground" );
+            bgBlack = Content.Load<Texture2D>( "bgBlack" );
 
             dialoguebox = new DialogueBox( this, textureDialogueBox );
             namebox = new NameBox( this, textureNameBox );
@@ -115,6 +117,25 @@ namespace MonoGameWindowsStarter
                     text.line1drawdone = true;
                     text.line2drawdone = true;
                     text.line3drawdone = true;
+                }
+            }
+
+            // Change background if the text reader has read a background change command
+            if ( text.changeBackground )
+            {
+                text.changeBackground = false;
+
+                switch ( text.newBackground )
+                {
+                    case "Library":
+                        bg.texture = bgLibrary;
+                        break;
+                    case "Black":
+                        bg.texture = bgBlack;
+                        break;
+                    default:
+                        bg.texture = bgBlack;
+                        break;
                 }
             }
 
