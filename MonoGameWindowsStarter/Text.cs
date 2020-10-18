@@ -32,6 +32,7 @@ namespace MonoGameWindowsStarter
         bool drawProtag;
 
         DialogueBox dialoguebox;
+        NameBox namebox;
 
         // StreamReader to read the file and a string to store the line that was read
         System.IO.StreamReader file;
@@ -42,8 +43,19 @@ namespace MonoGameWindowsStarter
         string displayline2;
         string displayline3;
 
+        // Strings to store names and a boolean to track whether their box is drawn
+        string nameDisplay;
+        string nameWaifu1;
+        string nameHusbando1;
+        string nameProtag;
+        string nameNone;
+        bool drawName;
+
         // Variable that tells us how many characters a line can have (here for easy changing)
         int maxlinelength;
+
+        // Variable that tells us what X Coordinate a name should be placed at to be centered (manually found through Trial and Error for now)
+        int nameCenterX;
 
         // public Boolean variable to signal when we are ready for the next line to be read, and one for when we are still writing.
         public bool readready;
@@ -57,10 +69,12 @@ namespace MonoGameWindowsStarter
         int line2drawprogress;
         int line3drawprogress;
 
-        public Text( Game1 g, DialogueBox db )
+        public Text( Game1 g, DialogueBox db, NameBox nb )
         {
             game = g;
             dialoguebox = db;
+            namebox = nb;
+
             file = new System.IO.StreamReader(@"..\..\..\..\dialogue.txt");
             readready = true;
             line1drawdone = false;
@@ -74,8 +88,15 @@ namespace MonoGameWindowsStarter
             displayline1 = "";
             displayline2 = "";
             displayline3 = "";
+            nameDisplay = "";
+            nameWaifu1 = "Faith";
+            nameHusbando1 = "Jay";
+            nameProtag = "Mary";
+            nameNone = "";
+            drawName = false;
 
             maxlinelength = 70;
+            nameCenterX = 0;
         }
 
         public void LoadContent( ContentManager content )
@@ -120,40 +141,152 @@ namespace MonoGameWindowsStarter
                     // If the line begins with '!' we are going to move a character portrait.
                     if (line[0] == '!')
                     {
+                        // Character 1 (waifu)
                         if (line[1] == '1')
                         {
+                            // Make her visible
                             drawWaifu1 = true;
 
+                            // Make the name box draw
+                            drawName = true;
+
+                            // Change her texture to the default (bright)
+                            waifu1.texture = textureWaifu1;
+
+                            // Display her name (Faith)
+                            nameDisplay = nameWaifu1;
+
+                            // Put her name in the center of the Name Box
+                            nameCenterX = 290;
+
+                            // Put on left side of screen
                             if (line[2] == 'l')
+                            {
                                 waifu1.Bounds.X = 0;
+
+                                // Darken other characters to highlight her (to show she's the one in focus, talking)
+                                husbando1.texture = textureHusbando1Dark;
+                                protag.texture = textureProtagDark;
+                            }
+                            // Put on right side of screen
                             if (line[2] == 'r')
+                            {
                                 waifu1.Bounds.X = game.graphics.PreferredBackBufferWidth - waifu1.Bounds.Width;
+
+                                // Darken other characters to highlight her (to show she's the one in focus, talking)
+                                husbando1.texture = textureHusbando1Dark;
+                                protag.texture = textureProtagDark;
+                            }
+                            if (line[2] == 'm')
+                            {
+                                waifu1.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (waifu1.Bounds.Width / 2);
+
+                                // Darken other characters to highlight her (to show she's the one in focus, talking)
+                                husbando1.texture = textureHusbando1Dark;
+                                protag.texture = textureProtagDark;
+                            }
+                            // Remove her from the screen
                             if (line[2] == 'x')
                                 drawWaifu1 = false;
                         }
+                        // Character 2 (husbando) (same code structure as waifu)
                         else if (line[1] == '2')
                         {
                             drawHusbando1 = true;
+                            drawName = true;
+                            husbando1.texture = textureHusbando1;
+                            nameDisplay = nameHusbando1;
+                            nameCenterX = 303;
 
                             if (line[2] == 'l')
+                            {
                                 husbando1.Bounds.X = 0;
+                                waifu1.texture = textureWaifu1Dark;
+                                protag.texture = textureProtagDark;
+                            }
                             if (line[2] == 'r')
+                            {
                                 husbando1.Bounds.X = game.graphics.PreferredBackBufferWidth - husbando1.Bounds.Width;
+                                waifu1.texture = textureWaifu1Dark;
+                                protag.texture = textureProtagDark;
+                            }
+                            if (line[2] == 'm')
+                            {
+                                husbando1.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (husbando1.Bounds.Width / 2);
+
+                                waifu1.texture = textureHusbando1Dark;
+                                protag.texture = textureProtagDark;
+                            }
                             if (line[2] == 'x')
                                 drawHusbando1 = false;
                         }
+                        // Character 3 (protagonist) (same code structure as waifu)
                         else if (line[1] == '3')
                         {
                             drawProtag = true;
+                            drawName = true;
+                            protag.texture = textureProtag;
+                            nameDisplay = nameProtag;
+                            nameCenterX = 297;
 
                             if (line[2] == 'l')
+                            {
                                 protag.Bounds.X = 0;
+                                waifu1.texture = textureWaifu1Dark;
+                                husbando1.texture = textureHusbando1Dark;
+                            }
                             if (line[2] == 'r')
+                            {
                                 protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
+                                waifu1.texture = textureWaifu1Dark;
+                                husbando1.texture = textureHusbando1Dark;
+                            }
+                            if (line[2] == 'm')
+                            {
+                                protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
+
+                                husbando1.texture = textureHusbando1Dark;
+                                waifu1.texture = textureProtagDark;
+                            }
                             if (line[2] == 'x')
                                 drawProtag = false;
                         }
+                        // Character 4 (no one) used to darken those still in view and hide the name box.
+                        else if (line[1] == '4')
+                        {
+                            waifu1.texture = textureWaifu1Dark;
+                            husbando1.texture = textureHusbando1Dark;
+                            protag.texture = textureProtagDark;
 
+                            nameDisplay = nameNone;
+                            drawName = false;
+                        }
+                        // Character 5 (protag inner monologue) used to brighten protag but hide the name box.
+                        else if (line[1] == '5')
+                        {
+                            waifu1.texture = textureWaifu1Dark;
+                            husbando1.texture = textureHusbando1Dark;
+                            protag.texture = textureProtag;
+
+                            nameDisplay = nameNone;
+                            drawName = false;
+
+                            if (line[2] == 'l')
+                            {
+                                protag.Bounds.X = 0;
+                            }
+                            if (line[2] == 'r')
+                            {
+                                protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
+                            }
+                            if (line[2] == 'm')
+                            {
+                                protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
+                            }
+                        }
+
+                        // Ready to read a new line and go back to the beginning of this update function call
+                        // That way we can move a character and display new text at the same time (like real VN's)
                         readready = true;
                         goto begin;
                     }
@@ -162,7 +295,6 @@ namespace MonoGameWindowsStarter
                     if ( line[0] == '<' )
                     {
                         //displayline1 = line.Substring( 1 );
-                        int len = line.Length;
                         int sb1count = 0;
                         int sb2count = 0;
                         int sb3count = 0;
@@ -173,7 +305,7 @@ namespace MonoGameWindowsStarter
                         StringBuilder sb2 = new StringBuilder("", maxlinelength);
                         StringBuilder sb3 = new StringBuilder("", maxlinelength);
 
-                        // Go through the string looking at each individual word, then place it into the correct line top-to-bottom.
+                        // Go through the string looking at each individual word, then place it into the correct line top-to-bottom (lines 1-3).
                         foreach( string word in linetrim.Split(' '))
                         {
                         restart:
@@ -277,6 +409,10 @@ namespace MonoGameWindowsStarter
             // Draw Dialogue Box
             dialoguebox.Draw( sb );
 
+            // Draw Name Box
+            if ( drawName )
+                namebox.Draw( sb );
+
             // Ensure line progress marker does not go out of bounds
             if (line1drawprogress >= displayline1.Length || line1drawdone )
                 line1drawprogress = displayline1.Length;
@@ -289,6 +425,7 @@ namespace MonoGameWindowsStarter
             sb.DrawString(font, displayline1.Substring(0, line1drawprogress), new Vector2(200, 550), Color.White);
             sb.DrawString(font, displayline2.Substring(0, line2drawprogress), new Vector2(200, 600), Color.White);
             sb.DrawString(font, displayline3.Substring(0, line3drawprogress), new Vector2(200, 650), Color.White);
+            sb.DrawString(font, nameDisplay, new Vector2(nameCenterX, 505), Color.White);
         }
     }
 }

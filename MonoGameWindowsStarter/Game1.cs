@@ -16,12 +16,14 @@ namespace MonoGameWindowsStarter
         // Textures
         Texture2D textureDialogueBox;
         Texture2D textureDialogueTick;
+        Texture2D textureNameBox;
 
         // Background textures
         Texture2D bgLibrary;
 
         // Onscreen objects
         DialogueBox dialoguebox;
+        NameBox namebox;
         Text text;
         DialogueTick dialoguetick;
         Background bg;
@@ -66,11 +68,13 @@ namespace MonoGameWindowsStarter
 
             // TODO: use this.Content to load your game content here
             textureDialogueBox = Content.Load<Texture2D>( "dialogueTEMP" );
+            textureNameBox = Content.Load<Texture2D>( "nameTEMP" );
             textureDialogueTick = Content.Load<Texture2D>( "dialogueAnimationTiny" );
             bgLibrary = Content.Load<Texture2D>("LibraryBackground");
 
             dialoguebox = new DialogueBox( this, textureDialogueBox );
-            text = new Text( this, dialoguebox );
+            namebox = new NameBox( this, textureNameBox );
+            text = new Text( this, dialoguebox, namebox );
             dialoguetick = new DialogueTick( this, textureDialogueTick );
             bg = new Background( this, bgLibrary );
             text.LoadContent( Content );

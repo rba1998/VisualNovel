@@ -92,6 +92,18 @@
 /processorParam:TextureFormat=Color
 /build:Library Background.png;LibraryBackground.png
 
+#begin nameTEMP.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:nameTEMP.png
+
 #begin protagcrop.png
 /importer:TextureImporter
 /processor:TextureProcessor

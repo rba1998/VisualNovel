@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NameBox.cs" />
     <Compile Include="Portrait.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="BoundingRectangle.cs" />

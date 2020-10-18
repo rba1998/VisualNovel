@@ -2,9 +2,11 @@
 <This is a set of test dialogue. We'll see how it goes. I need to type something really long here so that I can see if the word wrapping works. Hopefully it does! But what happens if I use a crap ton of words and go over?
 !1r
 <Now this is a short line. Hopefully long enough to test word wrap... maybe I need to use bigger words?
+!2l
 <Wholesome 100 Keanu chungus reddit moment
 !1x
 !2x
+!4
 <The FitnessGram Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds.
 <Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal.
 !3l
@@ -14,3 +16,7 @@
 !1l
 !3r
 <*prepares croquettes*
+!5r
+<mmmmmmm croquettes, yummy
+!5m
+<I'm running out of memes to put here honestly. Just imagine something funny written in this box. Too much work.
