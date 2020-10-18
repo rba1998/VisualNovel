@@ -28,13 +28,14 @@ namespace MonoGameWindowsStarter
         // Variable that tells us how many characters a line can have (here for easy changing)
         int maxlinelength;
 
-        // Boolean variable to signal when we are ready for the next line to be read.
-        bool readready;
+        // public Boolean variable to signal when we are ready for the next line to be read, and one for when we are still writing.
+        public bool readready;
+        public bool writing;
 
         // Boolean variables that signal when a line is done scrolling
-        bool line1drawdone;
-        bool line2drawdone;
-        bool line3drawdone;
+        public bool line1drawdone;
+        public bool line2drawdone;
+        public bool line3drawdone;
         int line1drawprogress;
         int line2drawprogress;
         int line3drawprogress;
@@ -47,6 +48,7 @@ namespace MonoGameWindowsStarter
             line1drawdone = false;
             line2drawdone = false;
             line3drawdone = false;
+            writing = true;
             line1drawprogress = 0;
             line2drawprogress = 0;
             line3drawprogress = 0;
@@ -73,6 +75,7 @@ namespace MonoGameWindowsStarter
                 line1drawdone = false;
                 line2drawdone = false;
                 line3drawdone = false;
+                writing = true;
                 line1drawprogress = 0;
                 line2drawprogress = 0;
                 line3drawprogress = 0;
@@ -135,7 +138,6 @@ namespace MonoGameWindowsStarter
                                 if (sb3count > maxlinelength)
                                 {
                                     line3full = true;
-                                    goto restart;
                                 }
                                 else
                                 {
@@ -143,9 +145,6 @@ namespace MonoGameWindowsStarter
                                 }
                             }
                         }
-                        line1full = false;
-                        line2full = false;
-                        line3full = false;
 
                         displayline1 = sb1.ToString();
                         displayline2 = sb2.ToString();
@@ -162,9 +161,6 @@ namespace MonoGameWindowsStarter
             {
                 if( line1drawprogress >= displayline1.Length )
                 {
-                    if (line1drawprogress >= displayline1.Length)
-                        line1drawprogress = displayline1.Length;
-
                     line1drawdone = true;
                     goto restart;
                 }
@@ -177,9 +173,6 @@ namespace MonoGameWindowsStarter
             {
                 if (line2drawprogress >= displayline2.Length)
                 {
-                    if (line2drawprogress >= displayline2.Length)
-                        line2drawprogress = displayline2.Length;
-
                     line2drawdone = true;
                     goto restart;
                 }
@@ -192,17 +185,21 @@ namespace MonoGameWindowsStarter
             {
                 if (line3drawprogress >= displayline3.Length)
                 {
-                    if (line3drawprogress >= displayline3.Length)
-                        line3drawprogress = displayline3.Length;
-
                     line3drawdone = true;
-                    goto restart;
+                    writing = false;
                 }
                 else
                 {
                     line3drawprogress += 2;
                 }
             }
+
+            if (line1drawprogress >= displayline1.Length || line1drawdone )
+                line1drawprogress = displayline1.Length;
+            if (line2drawprogress >= displayline2.Length || line2drawdone )
+                line2drawprogress = displayline2.Length;
+            if (line3drawprogress >= displayline3.Length || line3drawdone )
+                line3drawprogress = displayline3.Length;
 
             sb.DrawString(font, displayline1.Substring(0, line1drawprogress), new Vector2(200, 550), Color.White);
             sb.DrawString(font, displayline2.Substring(0, line2drawprogress), new Vector2(200, 600), Color.White);

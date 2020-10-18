@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Runtime.InteropServices;
 
 namespace MonoGameWindowsStarter
 {
@@ -19,10 +20,17 @@ namespace MonoGameWindowsStarter
         DialogueBox dialoguebox;
         Text text;
 
+        // Mouse states
+        MouseState currentMouseState;
+        MouseState lastMouseState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            currentMouseState = Mouse.GetState();
+            lastMouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -75,6 +83,25 @@ namespace MonoGameWindowsStarter
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            lastMouseState = currentMouseState;
+            currentMouseState = Mouse.GetState();
+
+            // If the mouse is clicked, finish writing out the current line. If the line is already done writing, advance to the next line of text.
+            if ( currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released )
+            {
+                if ( !text.writing )
+                {
+                    text.readready = true;
+                }
+                else
+                {
+                    text.writing = false;
+                    text.line1drawdone = true;
+                    text.line2drawdone = true;
+                    text.line3drawdone = true;
+                }
+            }
 
             // TODO: Add your update logic here
             text.Update(gameTime);
