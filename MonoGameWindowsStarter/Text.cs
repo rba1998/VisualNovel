@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace MonoGameWindowsStarter
         Texture2D textureWaifu1Dark;
         Texture2D textureHusbando1Dark;
         Texture2D textureProtagDark;
+        Texture2D texturePsychoFaith;
 
         Portrait waifu1;
         Portrait husbando1;
@@ -50,10 +52,19 @@ namespace MonoGameWindowsStarter
         string nameProtag;
         string nameNone;
         bool drawName;
+        bool drawDialogue;
 
         // public string to tell the Game1 class when to change the background, and a bool to signal that it's ready to change.
         public string newBackground;
         public bool changeBackground;
+
+        // public string to tell the Game1 class when to change the music, and a bool to signal that it's ready to change.
+        public string newMusic;
+        public bool changeMusic;
+
+        // public string to tell the Game1 class when to play a sound effect, and a bool to signal that it's ready.
+        public string sfx;
+        public bool playSfx;
 
         // Variable that tells us how many characters a line can have (here for easy changing)
         int maxlinelength;
@@ -73,6 +84,9 @@ namespace MonoGameWindowsStarter
         int line2drawprogress;
         int line3drawprogress;
 
+        // Boolean variables to keep track of character states
+        bool boolFaithPsycho;
+
         public Text( Game1 g, DialogueBox db, NameBox nb )
         {
             game = g;
@@ -89,6 +103,7 @@ namespace MonoGameWindowsStarter
             line2drawprogress = 0;
             line3drawprogress = 0;
 
+            // Text and name variables
             displayline1 = "";
             displayline2 = "";
             displayline3 = "";
@@ -99,8 +114,12 @@ namespace MonoGameWindowsStarter
             nameNone = "";
             drawName = false;
 
+            // Text formatting variables
             maxlinelength = 70;
             nameCenterX = 0;
+
+            // Character States
+            boolFaithPsycho = false;
         }
 
         public void LoadContent( ContentManager content )
@@ -114,6 +133,7 @@ namespace MonoGameWindowsStarter
             textureWaifu1Dark = content.Load<Texture2D>("waifu1cropdark");
             textureHusbando1Dark = content.Load<Texture2D>("husbando1cropdark");
             textureProtagDark = content.Load<Texture2D>("protagcropdark");
+            texturePsychoFaith = content.Load<Texture2D>("psychofaithcrop");
             waifu1 = new Portrait( game, textureWaifu1 );
             husbando1 = new Portrait( game, textureHusbando1 );
             protag = new Portrait( game, textureProtag );
@@ -156,6 +176,9 @@ namespace MonoGameWindowsStarter
                                 // Make the name box draw
                                 drawName = true;
 
+                                // Make the dialogue box draw
+                                drawDialogue = true;
+
                                 // Change her texture to the default (bright)
                                 waifu1.texture = textureWaifu1;
 
@@ -194,12 +217,29 @@ namespace MonoGameWindowsStarter
                                 // Remove her from the screen
                                 if (line[2] == 'x')
                                     drawWaifu1 = false;
+
+                                // Do portrait variations
+                                switch ( line[3] )
+                                {
+                                    case '1':
+                                        waifu1.texture = textureWaifu1;
+                                        boolFaithPsycho = false;
+                                        break;
+                                    case '2':
+                                        waifu1.texture = texturePsychoFaith;
+                                        boolFaithPsycho = true;
+                                        break;
+                                    default:
+                                        break;
+                                }
+
                                 break;
 
                             // Character 2 (husbando) (same code structure as waifu)
                             case '2':
                                 drawHusbando1 = true;
                                 drawName = true;
+                                drawDialogue = true;
                                 husbando1.texture = textureHusbando1;
                                 nameDisplay = nameHusbando1;
                                 nameCenterX = 303;
@@ -225,12 +265,22 @@ namespace MonoGameWindowsStarter
                                 }
                                 if (line[2] == 'x')
                                     drawHusbando1 = false;
+
+                                switch (line[3])
+                                {
+                                    case '1':
+                                        husbando1.texture = textureHusbando1;
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 break;
 
                             // Character 3 (protagonist) (same code structure as waifu)
                             case '3':
                                 drawProtag = true;
                                 drawName = true;
+                                drawDialogue = true;
                                 protag.texture = textureProtag;
                                 nameDisplay = nameProtag;
                                 nameCenterX = 297;
@@ -256,6 +306,31 @@ namespace MonoGameWindowsStarter
                                 }
                                 if (line[2] == 'x')
                                     drawProtag = false;
+
+                                /*
+                                 * This solution is ass. It needs to be changed.
+                                 * The problem was that when we returned to Mary's dialogue in the prologue, Faith went un-psycho.
+                                 * It's 3am and I don't feel like actually solving this problem, so instead we're doing this
+                                 * awful temp fix. It's geared toward the specific situation in the prologue, and could get weird in future scenes.
+                                 * 
+                                 * If you're about to start expanding this game (Lord save us all if the expansion is already underway)
+                                 * FIX IT NOW OR SUFFER THE CONSEQUENCES
+                                 * 
+                                 */
+                                if ( boolFaithPsycho )
+                                {
+                                    waifu1.texture = texturePsychoFaith;
+                                }
+                                // End 3am rant. Yes, it's that single if statement that sucks all that ass.
+
+                                switch (line[3])
+                                {
+                                    case '1':
+                                        protag.texture = textureProtag;
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 break;
 
                             // Character 4 (no one) used to darken those still in view and hide the name box.
@@ -266,6 +341,7 @@ namespace MonoGameWindowsStarter
 
                                 nameDisplay = nameNone;
                                 drawName = false;
+                                drawDialogue = true;
                                 break;
 
                             // Character 5 (protag inner monologue) used to brighten protag but hide the name box.
@@ -276,6 +352,7 @@ namespace MonoGameWindowsStarter
 
                                 nameDisplay = nameNone;
                                 drawName = false;
+                                drawDialogue = true;
 
                                 if (line[2] == 'l')
                                 {
@@ -289,6 +366,32 @@ namespace MonoGameWindowsStarter
                                 {
                                     protag.Bounds.X = (game.graphics.PreferredBackBufferWidth / 2) - (protag.Bounds.Width / 2);
                                 }
+
+                                /*
+                                 * This solution is ass. It needs to be changed.
+                                 * The problem was that when we returned to Mary's dialogue in the prologue, Faith went un-psycho.
+                                 * It's 3am and I don't feel like actually solving this problem, so instead we're doing this
+                                 * awful temp fix. It's geared toward the specific situation in the prologue, and could get weird in future scenes.
+                                 * 
+                                 * If you're about to start expanding this game (Lord save us all if the expansion is already underway)
+                                 * FIX IT NOW OR SUFFER THE CONSEQUENCES
+                                 * 
+                                 */
+                                if (boolFaithPsycho)
+                                {
+                                    waifu1.texture = texturePsychoFaith;
+                                }
+                                // End 3am rant. Yes, it's that single if statement that sucks all that ass.
+
+                                break;
+
+                            // Hide textbox and name box, used when first introducing a cg
+                            case '6':
+                                drawProtag = false;
+                                drawWaifu1 = false;
+                                drawHusbando1 = false;
+                                drawName = false;
+                                drawDialogue = false;
                                 break;
 
                             default:
@@ -305,21 +408,30 @@ namespace MonoGameWindowsStarter
                     if ( line[0] == 'b' )
                     {
                         changeBackground = true;
-                        switch ( line[1] )
-                        {
-                            case 'L':
-                                newBackground = "Library";
-                                break;
-                            case 'B':
-                                newBackground = "Black";
-                                break;
-                            default:
-                                changeBackground = false;
-                                break;
-                        }
+                        newBackground = line.Substring( 1 );
 
                         // Ready to read a new line and go back to the beginning of this update function call
                         // That way we can change the background and display new text at the same time (like real VN's)
+                        readready = true;
+                        goto begin;
+                    }
+
+                    // Music
+                    if ( line[0] == 'm' )
+                    {
+                        changeMusic = true;
+                        newMusic = line.Substring( 1 );
+
+                        readready = true;
+                        goto begin;
+                    }
+
+                    // Sfx
+                    if ( line[0] == 's' )
+                    {
+                        playSfx = true;
+                        sfx = line.Substring( 1 );
+
                         readready = true;
                         goto begin;
                     }
@@ -440,7 +552,8 @@ namespace MonoGameWindowsStarter
                 protag.Draw( sb );
 
             // Draw Dialogue Box
-            dialoguebox.Draw( sb );
+            if ( drawDialogue )
+                dialoguebox.Draw( sb );
 
             // Draw Name Box
             if ( drawName )

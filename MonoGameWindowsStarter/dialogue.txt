@@ -1,60 +1,95 @@
-!4
+mAbstract
+!400
 <The year 2022 has come, and yet the world, or at least our world, is still in shambles. We thought things would get better, but some people were just too selfish.
 <The virus has spread far and wide, and zombies now walk among us.
 <It's scary. We're scared. We've been holed up in this library for a few weeks now- or has it been months? It's hard to keep track anymore.
-!1l
-!2r
-!4
+!1l0
+!2r0
+!400
 <Faith and Jay have been here with me, they've helped keep me sane. But I, unfortunately, am the one in charge of scavenging for our food.
-!1x
-!2x
-!4
+!1x0
+!2x0
+!410
 <...
-!3m
+!3m0
 <Faith? Jay? Where are you guys?
-!3l
-!2r
+!3l0
+!2r0
 <Hey Mary, did you find us some of the good stuff?
-!3m
-!1l
+!3m0
+!1l0
 <By "good stuff", I hope you mean another extra big can of beans like the one Mary scored at the supermarket last week.
-!3m
+!3m0
 <Haha...
 <You see, well...
 <I searched everywhere in the vicinity and I couldn't find anything. I think we've wiped this place pretty much clean.
 <Don't you think we should try to camp somewhere else, so we can find more resources?
-!5m
+!5m0
 <Both Jay and Faith suddenly look a little uneasy.
-!1l
+!1l0
 <You know we can't leave the library. It's just way too dangerous for Jay and I.
-!2r
+!2r0
 <Yeah. I'm sure we can find some other source of food soon.
-!1l
+!1l0
 <Well we better find some soon, because I am absolutely STARVING. I'd eat anything...
-!2x
-!3r
+!2x0
+!3r0
 <I'm sorry Faith... I'm sure I'll find something...
-!1l
+!1l0
 <Are you sure you don't have anything on your person? At all?
-!5r
+!5r0
 <Faith is suddenly acting a bit strangely. I couldn't say what it is, but... something seems off.
-!1m
-bB
+!1m0
+bBlack
 <You know...
 <...
 <Humans...
 <...
 <They do have some meat on their bones.
+mScary
+!1m2
 <You're not using your pinky anyways, right?
-!5r
+<You know what you need to do.
+!5r0
 <What?
 <This has to be some kind of insane joke, but...
 <Faith seems completely serious.
 <DEAD serious.
-!1m
+!1m2
 <Mary... we'll starve! You don't want that...
 <...right?
-!5r
+!5r0
 <...well...
 <Friends do need to make sacrifices for each other...
 <...right?
+sHeartbeat
+!600
+bPinky
+<
+!5m0
+<Before I know it, I've cut off my own finger. I, by my own free will, have inflicted unimaginable pain upon... myself.
+<I should scream.
+<But I don't.
+<I should cry.
+<But I don't.
+<I should feel pain.
+<...
+<But...
+<I don't.
+!3m0
+!5m0
+<Mary and Jay mean everything to me, and I would do anything to keep them living until tomorrow.
+<Some days they just seem like distant voices, but even still, I would do anything they told me.
+<No pain is too great, when I know that my pain is what feeds them. And what feeds them keeps them alive.
+<There is nothing more to gain than life itself...
+<...right?
+<
+<To Be Continued
+<--Credits--
+<Art/Scripting/Story: Kaitlyn Morgan
+<"I'm tired. Just kidding, don't put that. But I am pretty tired." (When I asked her what to put here at 4am)
+<"I hope you appreciate the art. Thanks for playing!"
+<Programming/Text-to-VN engine: Brandon Ault
+<"Thanks for playing! Sorry if it got a bit dark... we wanted to take the theme in a unique, up-for-interpretation direction."
+<"We were inspired a bit by Danganronpa and School-Live. Hoping to flesh out the characters and do a full story for a full release. And Persona 5 for that text ticker thing on the bottom-right ---->"
+<Now it's 4am, so I'm gonna give you a cheat code: Press ESC to close the game. A proper button will come later lol.

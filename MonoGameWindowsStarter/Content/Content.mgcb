@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin AbstractVision5.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:AbstractVision5.mp3
+
 #begin bgBlack.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -56,6 +62,12 @@
 /processorParam:TextureFormat=Color
 /build:dialogueTEMP.png
 
+#begin heartbeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:heartbeat.wav
+
 #begin husbando1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -92,6 +104,18 @@
 /processorParam:TextureFormat=Color
 /build:husbando1cropdark.png
 
+#begin Library Background color.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Library Background color.png
+
 #begin Library Background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -115,6 +139,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:nameTEMP.png
+
+#begin Pinky CG.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Pinky CG.png;PinkyCG.png
 
 #begin protagcrop.png
 /importer:TextureImporter
@@ -151,6 +187,24 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:protagonist.png
+
+#begin psychofaithcrop.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:psychofaithcrop.png
+
+#begin ScaryTheme5v2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ScaryTheme5v2.mp3
 
 #begin waifu1.png
 /importer:TextureImporter

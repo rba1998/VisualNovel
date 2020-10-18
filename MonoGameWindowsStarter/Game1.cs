@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Runtime.InteropServices;
 
 namespace MonoGameWindowsStarter
@@ -21,6 +23,12 @@ namespace MonoGameWindowsStarter
         // Background textures
         Texture2D bgLibrary;
         Texture2D bgBlack;
+        Texture2D cgPinky;
+
+        // Music and sfx
+        Song ScaryTheme;
+        Song AbstractVision;
+        SoundEffect sfxHeartbeat;
 
         // Onscreen objects
         DialogueBox dialoguebox;
@@ -67,13 +75,22 @@ namespace MonoGameWindowsStarter
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // Load Textures
             textureDialogueBox = Content.Load<Texture2D>( "dialogueTEMP" );
             textureNameBox = Content.Load<Texture2D>( "nameTEMP" );
             textureDialogueTick = Content.Load<Texture2D>( "dialogueAnimationTiny" );
-            bgLibrary = Content.Load<Texture2D>( "LibraryBackground" );
+            bgLibrary = Content.Load<Texture2D>( "Library Background color" );
             bgBlack = Content.Load<Texture2D>( "bgBlack" );
+            cgPinky = Content.Load<Texture2D>( "PinkyCG" );
 
+            // Load Sound
+            ScaryTheme = Content.Load<Song>("ScaryTheme5v2");
+            AbstractVision = Content.Load<Song>("AbstractVision5");
+            sfxHeartbeat = Content.Load<SoundEffect>("heartbeat");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.5f;
+
+            // Create new instances of necessary objects and controllers
             dialoguebox = new DialogueBox( this, textureDialogueBox );
             namebox = new NameBox( this, textureNameBox );
             text = new Text( this, dialoguebox, namebox );
@@ -133,8 +150,40 @@ namespace MonoGameWindowsStarter
                     case "Black":
                         bg.texture = bgBlack;
                         break;
+                    case "Pinky":
+                        bg.texture = cgPinky;
+                        break;
                     default:
                         bg.texture = bgBlack;
+                        break;
+                }
+            }
+
+            if ( text.changeMusic )
+            {
+                text.changeMusic = false;
+                switch ( text.newMusic )
+                {
+                    case "Abstract":
+                        MediaPlayer.Play( AbstractVision );
+                        break;
+                    case "Scary":
+                        MediaPlayer.Play( ScaryTheme );
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if ( text.playSfx )
+            {
+                text.playSfx = false;
+                switch ( text.sfx )
+                {
+                    case "Heartbeat":
+                        sfxHeartbeat.Play();
+                        break;
+                    default:
                         break;
                 }
             }
