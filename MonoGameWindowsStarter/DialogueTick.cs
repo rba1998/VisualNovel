@@ -24,15 +24,10 @@ namespace MonoGameWindowsStarter
             texture = t;
             Bounds.Width = 146;
             Bounds.Height = 89;
-            Bounds.X = 1100;
+            Bounds.X = 1090;
             Bounds.Y = 600;
 
             sheetLocation = new Rectangle( 0, 0, 146, 89 );
-        }
-
-        public void LoadContent( ContentManager content )
-        {
-            
         }
 
         public void Update( GameTime gt )

@@ -16,6 +16,23 @@ namespace MonoGameWindowsStarter
         // font to be used by the game
         private SpriteFont font;
 
+        // Character textures
+        Texture2D textureWaifu1;
+        Texture2D textureHusbando1;
+        Texture2D textureProtag;
+        Texture2D textureWaifu1Dark;
+        Texture2D textureHusbando1Dark;
+        Texture2D textureProtagDark;
+
+        Portrait waifu1;
+        Portrait husbando1;
+        Portrait protag;
+        bool drawWaifu1;
+        bool drawHusbando1;
+        bool drawProtag;
+
+        DialogueBox dialoguebox;
+
         // StreamReader to read the file and a string to store the line that was read
         System.IO.StreamReader file;
         string line;
@@ -40,9 +57,10 @@ namespace MonoGameWindowsStarter
         int line2drawprogress;
         int line3drawprogress;
 
-        public Text( Game1 g )
+        public Text( Game1 g, DialogueBox db )
         {
             game = g;
+            dialoguebox = db;
             file = new System.IO.StreamReader(@"..\..\..\..\dialogue.txt");
             readready = true;
             line1drawdone = false;
@@ -63,10 +81,22 @@ namespace MonoGameWindowsStarter
         public void LoadContent( ContentManager content )
         {
             font = content.Load<SpriteFont>( "defaultfont" );
+
+            // We need to control the character portraits from here too, because they are controlled from the file as well.
+            textureWaifu1 = content.Load<Texture2D>("waifu1crop");
+            textureHusbando1 = content.Load<Texture2D>("husbando1crop");
+            textureProtag = content.Load<Texture2D>("protagcrop");
+            textureWaifu1Dark = content.Load<Texture2D>("waifu1cropdark");
+            textureHusbando1Dark = content.Load<Texture2D>("husbando1cropdark");
+            textureProtagDark = content.Load<Texture2D>("protagcropdark");
+            waifu1 = new Portrait( game, textureWaifu1 );
+            husbando1 = new Portrait( game, textureHusbando1 );
+            protag = new Portrait( game, textureProtag );
         }
 
         public void Update( GameTime gt )
         {
+        begin:
             // If readready is true, it means we have a new line ready to read (the player has advanced the dialogue)
             if ( readready )
             {
@@ -87,6 +117,47 @@ namespace MonoGameWindowsStarter
                     // Create a variable to use when displaying text and reading arguments that leaves out the initial command character.
                     string linetrim = line.Substring(1);
 
+                    // If the line begins with '!' we are going to move a character portrait.
+                    if (line[0] == '!')
+                    {
+                        if (line[1] == '1')
+                        {
+                            drawWaifu1 = true;
+
+                            if (line[2] == 'l')
+                                waifu1.Bounds.X = 0;
+                            if (line[2] == 'r')
+                                waifu1.Bounds.X = game.graphics.PreferredBackBufferWidth - waifu1.Bounds.Width;
+                            if (line[2] == 'x')
+                                drawWaifu1 = false;
+                        }
+                        else if (line[1] == '2')
+                        {
+                            drawHusbando1 = true;
+
+                            if (line[2] == 'l')
+                                husbando1.Bounds.X = 0;
+                            if (line[2] == 'r')
+                                husbando1.Bounds.X = game.graphics.PreferredBackBufferWidth - husbando1.Bounds.Width;
+                            if (line[2] == 'x')
+                                drawHusbando1 = false;
+                        }
+                        else if (line[1] == '3')
+                        {
+                            drawProtag = true;
+
+                            if (line[2] == 'l')
+                                protag.Bounds.X = 0;
+                            if (line[2] == 'r')
+                                protag.Bounds.X = game.graphics.PreferredBackBufferWidth - protag.Bounds.Width;
+                            if (line[2] == 'x')
+                                drawProtag = false;
+                        }
+
+                        readready = true;
+                        goto begin;
+                    }
+
                     // If the line begins with '<' we have standard dialogue. Split the line into 3 lines for display.
                     if ( line[0] == '<' )
                     {
@@ -105,7 +176,7 @@ namespace MonoGameWindowsStarter
                         // Go through the string looking at each individual word, then place it into the correct line top-to-bottom.
                         foreach( string word in linetrim.Split(' '))
                         {
-                            restart:
+                        restart:
                             if ( !line1full )
                             {
                                 sb1count += word.Length + 1;
@@ -156,7 +227,8 @@ namespace MonoGameWindowsStarter
 
         public void Draw( SpriteBatch sb )
         {
-            restart:
+            // Draw each line of text, a few letters at a time to create a scrolling effect.
+        restart:
             if ( !line1drawdone )
             {
                 if( line1drawprogress >= displayline1.Length )
@@ -194,6 +266,18 @@ namespace MonoGameWindowsStarter
                 }
             }
 
+            // Draw characters
+            if ( drawWaifu1 )
+                waifu1.Draw( sb );
+            if ( drawHusbando1 )
+                husbando1.Draw( sb );
+            if ( drawProtag )
+                protag.Draw( sb );
+
+            // Draw Dialogue Box
+            dialoguebox.Draw( sb );
+
+            // Ensure line progress marker does not go out of bounds
             if (line1drawprogress >= displayline1.Length || line1drawdone )
                 line1drawprogress = displayline1.Length;
             if (line2drawprogress >= displayline2.Length || line2drawdone )
@@ -201,6 +285,7 @@ namespace MonoGameWindowsStarter
             if (line3drawprogress >= displayline3.Length || line3drawdone )
                 line3drawprogress = displayline3.Length;
 
+            // Draw all 3 lines of text
             sb.DrawString(font, displayline1.Substring(0, line1drawprogress), new Vector2(200, 550), Color.White);
             sb.DrawString(font, displayline2.Substring(0, line2drawprogress), new Vector2(200, 600), Color.White);
             sb.DrawString(font, displayline3.Substring(0, line3drawprogress), new Vector2(200, 650), Color.White);

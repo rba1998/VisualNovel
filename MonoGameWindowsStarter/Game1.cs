@@ -10,7 +10,7 @@ namespace MonoGameWindowsStarter
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         // Textures
@@ -67,13 +67,13 @@ namespace MonoGameWindowsStarter
             // TODO: use this.Content to load your game content here
             textureDialogueBox = Content.Load<Texture2D>( "dialogueTEMP" );
             textureDialogueTick = Content.Load<Texture2D>( "dialogueAnimationTiny" );
-            bgLibrary = Content.Load<Texture2D>( "LibraryBackground" );
+            bgLibrary = Content.Load<Texture2D>("LibraryBackground");
+
             dialoguebox = new DialogueBox( this, textureDialogueBox );
-            text = new Text( this );
+            text = new Text( this, dialoguebox );
             dialoguetick = new DialogueTick( this, textureDialogueTick );
             bg = new Background( this, bgLibrary );
             text.LoadContent( Content );
-            dialoguetick.LoadContent( Content );
         }
 
         /// <summary>
@@ -133,7 +133,6 @@ namespace MonoGameWindowsStarter
             spriteBatch.Begin();
 
             bg.Draw( spriteBatch );
-            dialoguebox.Draw( spriteBatch );
             text.Draw( spriteBatch );
             if( !text.writing && !text.readready )
             {
