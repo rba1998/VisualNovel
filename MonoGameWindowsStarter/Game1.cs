@@ -17,10 +17,14 @@ namespace MonoGameWindowsStarter
         Texture2D textureDialogueBox;
         Texture2D textureDialogueTick;
 
+        // Background textures
+        Texture2D bgLibrary;
+
         // Onscreen objects
         DialogueBox dialoguebox;
         Text text;
         DialogueTick dialoguetick;
+        Background bg;
 
         // Mouse states
         MouseState currentMouseState;
@@ -63,9 +67,11 @@ namespace MonoGameWindowsStarter
             // TODO: use this.Content to load your game content here
             textureDialogueBox = Content.Load<Texture2D>( "dialogueTEMP" );
             textureDialogueTick = Content.Load<Texture2D>( "dialogueAnimationTiny" );
+            bgLibrary = Content.Load<Texture2D>( "LibraryBackground" );
             dialoguebox = new DialogueBox( this, textureDialogueBox );
             text = new Text( this );
             dialoguetick = new DialogueTick( this, textureDialogueTick );
+            bg = new Background( this, bgLibrary );
             text.LoadContent( Content );
             dialoguetick.LoadContent( Content );
         }
@@ -126,6 +132,7 @@ namespace MonoGameWindowsStarter
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            bg.Draw( spriteBatch );
             dialoguebox.Draw( spriteBatch );
             text.Draw( spriteBatch );
             if( !text.writing && !text.readready )
